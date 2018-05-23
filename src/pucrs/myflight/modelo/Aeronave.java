@@ -37,8 +37,10 @@ public class Aeronave implements Imprimivel, Comparable<Aeronave> {
 
 	// Define o critério de comparação entre duas
 	// aeronaves (usado em Collections.sort(), por exemplo
+	//teste
 	@Override
 	public int compareTo(Aeronave outra) {
+
 		return descricao.compareTo(outra.descricao);
 	}
 }
