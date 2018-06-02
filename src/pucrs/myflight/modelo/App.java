@@ -11,17 +11,18 @@ public class App {
 	public static void main(String[] args) {
 
 		GerenciadorCias gerCias = new GerenciadorCias();
+		GerenciadorAeroportos gerencAero = new GerenciadorAeroportos();
 
         try {
-            gerCias.carregaDados("airlines.dat");
+            gerencAero.carregaDados("airports.dat");
         } catch (IOException e) {
-            System.out.println("Não foi possível ler airlines.dat!");
+            System.out.println("Não foi possível ler airports.dat!");
 //            System.exit(1);
         }
-        ArrayList<CiaAerea> todasCias = gerCias.listarTodas();
-        System.out.println("Total cias:"+todasCias.size());
-        for(CiaAerea cia: todasCias)
-            System.out.println(cia.getCodigo()+" - "+cia.getNome());
+        ArrayList<Aeroporto> todasAero = gerencAero.listarTodos();
+        System.out.println("Total cias:"+todasAero.size());
+        for(Aeroporto aero: todasAero)
+            System.out.println(aero.getCodigo()+" - "+aero.getNome() + " - "+aero.getLocal());
 
 		/*
 		gerCias.adicionar(new CiaAerea("JJ", "LATAM Linhas Aéreas"));

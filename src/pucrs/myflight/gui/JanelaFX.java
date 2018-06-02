@@ -144,7 +144,8 @@ public class JanelaFX extends Application {
 		lstPoints.add(new MyWaypoint(Color.RED, mia.getCodigo(), mia.getLocal(), 5));
 
 		// Para obter um ponto clicado no mapa, usar como segue:
-		// GeoPosition pos = gerenciador.getPosicao();
+		GeoPosition pos = gerenciador.getPosicao();
+
 
 		// Informa o resultado para o gerenciador
 		gerenciador.setPontos(lstPoints);
@@ -170,7 +171,7 @@ public class JanelaFX extends Application {
 				gerenciador.getMapKit().repaint();
 			}
 		}
-	}
+    }
 
 	private void createSwingContent(final SwingNode swingNode) {
 		SwingUtilities.invokeLater(new Runnable() {
