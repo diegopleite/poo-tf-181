@@ -5,20 +5,23 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class GerenciadorAeroportos {
 
     private ArrayList<Aeroporto> aeroportos;
 
+
     public GerenciadorAeroportos() {
         this.aeroportos = new ArrayList<>();
+
     }
 
     public void ordenarNomes() {
+
         Collections.sort(aeroportos);
+
+
     }
 
     public void adicionar(Aeroporto aero) {
@@ -48,7 +51,7 @@ public class GerenciadorAeroportos {
                 lon = Double.parseDouble(lg);
 
                 Aeroporto novo = new Aeroporto(cod, nome,new Geo(lat,lon));
-                adicionar(novo);
+                aeroportos.add(novo);
             }
         }
     }

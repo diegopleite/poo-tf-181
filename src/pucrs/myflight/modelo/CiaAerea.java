@@ -8,7 +8,9 @@ public class CiaAerea {
 		this.codigo = codigo;
 		this.nome = nome;
 	}
-	
+	public CiaAerea(String codigo){
+		this.codigo = codigo;
+	}
 	public String getCodigo() {
 		return codigo;
 	}

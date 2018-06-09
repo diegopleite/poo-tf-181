@@ -1,8 +1,14 @@
 package pucrs.myflight.modelo;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Scanner;
 
 public class GerenciadorAeronaves {
 
@@ -25,6 +31,27 @@ public class GerenciadorAeronaves {
             if(a.getCodigo().equals(codigo))
                 return a;
         return null;
+    }
+
+    public void carregaDados(String nomeArq) throws IOException {
+        Path path = Paths.get(nomeArq);
+        try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.forName("utf8")))) {
+            sc.useDelimiter("[;\n]"); // separadores: ; e nova linha
+            String header = sc.nextLine(); // pula cabeçalho
+            String cod, des, aux;
+            int cap;
+
+
+            while (sc.hasNext()) {
+                cod = sc.next();
+                des = sc.next();
+                aux = sc.next();
+                cap = Integer.parseInt(aux);
+
+                Aeronave nova = new Aeronave(cod,des,cap);
+                adicionar(nova);
+            }
+        }
     }
 
     public void ordenarDescricao() {

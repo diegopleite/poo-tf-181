@@ -10,6 +10,9 @@ public class Aeronave implements Imprimivel, Comparable<Aeronave> {
 		this.descricao = descricao;
 		this.capacidade = cap;
 	}
+	public Aeronave(){
+
+	}
 	
 	public String getCodigo() {
 		return codigo;

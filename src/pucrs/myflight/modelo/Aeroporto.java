@@ -10,7 +10,9 @@ public class Aeroporto implements Comparable<Aeroporto> {
 		this.nome = nome;
 		this.loc = loc;
 	}
-	
+	public Aeroporto(String codigo){
+		this.codigo = codigo;
+	}
 	public String getCodigo() {
 		return codigo;
 	}
