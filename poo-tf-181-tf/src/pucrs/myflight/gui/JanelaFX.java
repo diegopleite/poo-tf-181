@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -49,7 +50,7 @@ public class JanelaFX extends Application {
 	private GerenciadorRotas gerRotas;
 	private GerenciadorAeronaves gerAvioes;
 
-	private GerenciadorMapa gerenciador;
+	private static GerenciadorMapa gerenciador;
 
 	private EventosMouse mouse;
 
@@ -94,21 +95,31 @@ public class JanelaFX extends Application {
            System.out.println("Não foi possivel ler countries.dat!");
             System.exit(1);
         }
-        System.out.println("ok");
         
-        CiaAerea a = new CiaAerea("G3");
         
-        JanelaFX.gerapontosecaminhos(a);
+       
         
-
-		//setup();
-
-		GeoPosition poa = new GeoPosition(-30.05, -51.18);
+    	GeoPosition poa = new GeoPosition(-30.05, -51.18);
 		gerenciador = new GerenciadorMapa(poa, GerenciadorMapa.FonteImagens.VirtualEarth);
 		mouse = new EventosMouse();
 		gerenciador.getMapKit().getMainMap().addMouseListener(mouse);
 		gerenciador.getMapKit().getMainMap().addMouseMotionListener(mouse);
 
+        
+       
+       // System.out.println(trpoints1);
+        int b = 0;
+for (Rota r: GerenciadorRotas.listarTodas()) {
+	
+	System.out.println(r);
+	if (b == 10) {
+		break;
+	}
+	b=b+1;
+}
+		//setup();
+
+	
 		createSwingContent(mapkit);
 
 		BorderPane pane = new BorderPane();
@@ -152,22 +163,58 @@ public class JanelaFX extends Application {
 		gerAvioes = new GerenciadorAeronaves();
 	}
 	public static void gerapontosecaminhos(CiaAerea a) {
+		gerenciador.clear();
 		for (Rota c : GerenciadorRotas.listarTodas()) {
 			if (c.getCia().getCodigo().equals(a.getCodigo())) {
 		for (Aeroporto b : GerenciadorAeroportos.listarTodas()) {
 		        if(c.getDestino().getCodigo().equals(b.getCodigo())||c.getOrigem().getCodigo().equals(b.getCodigo())) {
 
 		    		lstPoints.add(new MyWaypoint(Color.RED, b.getCodigo(), b.getLocal(), 5));
-		    		System.out.println(b);
-		    		System.out.println("TESTE");
+		    		trpoints1.add(b.getCodigo());
 		    		
 		        }
 		        }
 			}
 		}
-		
-	}
-	static List<MyWaypoint> lstPoints = new ArrayList<>();
+		for (Rota r : GerenciadorRotas.listarTodas()) {
+			
+		for (String s : trpoints1) {
+			
+			if (r.getOrigem().getCodigo().equals(s)) {
+				
+				for (String s2 : trpoints1) {
+					if(r.getDestino().getCodigo().equals(s2)) {
+						for (Aeroporto ae: GerenciadorAeroportos.listarTodas()) {
+							if (ae.getCodigo().equals(s)) {
+								origem.add(ae);
+							}
+						}
+						for (Aeroporto ae: GerenciadorAeroportos.listarTodas()) {
+							if (ae.getCodigo().equals(s2)) {
+								destino.add(ae);
+							}
+						}
+						
+					}
+				}
+			}
+		}
+		}
+		for (int i=0;i<origem.size();i++) {
+		Tracado tr = new Tracado();
+		tr.setWidth(1);
+		tr.setCor(Color.BLUE);
+	
+		tr.addPonto(origem.get(i).getLocal());
+		tr.addPonto(destino.get(i).getLocal());
+		gerenciador.addTracado(tr);
+		}
+		}
+	
+	static ArrayList<MyWaypoint> lstPoints = new ArrayList<MyWaypoint>();
+	static HashSet<String> trpoints1 = new HashSet<String>();
+	static ArrayList<Aeroporto> origem = new ArrayList<Aeroporto>();
+	static ArrayList<Aeroporto> destino = new ArrayList<Aeroporto>();
 	private void consulta1() {
 
 		// Lista para armazenar o resultado da consulta
@@ -177,24 +224,17 @@ public class JanelaFX extends Application {
 		Aeroporto gru = new Aeroporto("GRU", "Guarulhos", new Geo(-23.4356, -46.4731));
 		Aeroporto lis = new Aeroporto("LIS", "Lisbon", new Geo(38.772,-9.1342));
 		Aeroporto mia = new Aeroporto("MIA", "Miami International", new Geo(25.7933, -80.2906));
+		 CiaAerea a = new CiaAerea("G3");
+		gerapontosecaminhos(a);
 		
-		gerenciador.clear();
-		Tracado tr = new Tracado();
-		tr.setLabel("Teste");
-		tr.setWidth(5);
-		tr.setCor(new Color(0,0,0,60));
-		tr.addPonto(poa.getLocal());
-		tr.addPonto(mia.getLocal());
-
-		gerenciador.addTracado(tr);
-		
-//		Tracado tr2 = new Tracado();
-//		tr2.setWidth(5);
-//		tr2.setCor(Color.BLUE);
-//		tr2.addPonto(gru.getLocal());
-//		tr2.addPonto(lis.getLocal());
-//		gerenciador.addTracado(tr2);
-		
+	/*	
+		Tracado tr2 = new Tracado();
+		tr2.setWidth(5);
+		tr2.setCor(Color.BLUE);
+		tr2.addPonto(gru.getLocal());
+		tr2.addPonto(lis.getLocal());
+		gerenciador.addTracado(tr2);
+		*/
 		// Adiciona os locais de cada aeroporto (sem repetir) na lista de
 		// waypoints
 		/*

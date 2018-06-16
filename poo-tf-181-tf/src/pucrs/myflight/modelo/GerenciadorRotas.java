@@ -48,6 +48,7 @@ public class GerenciadorRotas {
     public void adicionar(Rota r) {
         rotas.add(r);
     }
+   
 
     public static HashSet<Rota> listarTodas() {
         return rotas;
@@ -57,20 +58,61 @@ public class GerenciadorRotas {
         Path path = Paths.get(nomeArq);
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.forName("utf8")))) {
             sc.useDelimiter("[;\n]"); // separadores: ; e nova linha
+            
             String header = sc.nextLine(); // pula cabeçalho
             String cod,from,to,stops,equip;
+            int t = 2;
 
             while (sc.hasNext()) {
                 cod = sc.next();
 //                from = sc.next();
-                to = sc.next();
+                from = sc.next();
 //              code = sc.next();
-                stops = sc.next();
-                equip = sc.next();
-                Aeroporto a1 = new Aeroporto(to);
+                to = sc.next();
+                sc.next();
+                sc.next();
+               equip = sc.next();
+               
+               ArrayList<String> h = new ArrayList<String>();
+               HashSet<Aeronave> ae = new HashSet<Aeronave>();
+               HashSet<String> as = new HashSet<String>();
+               as.clear();
+				for (char c : equip.toCharArray()) {
+					String s = "" + c;
+					h.add(s);
+				}
+				equip="";
+				for (int i=0;i<h.size();i++) {
+                    if(i==h.size()-1) {
+                    	equip=equip+h.get(i);
+                    	as.add(equip);
+                    	break;
+                    }
+					if(h.get(i).equals(" ")) {
+                    	as.add(equip);
+                    	equip="";
+                    }
+					else {
+					equip=equip+h.get(i);
+					}
+				}
+				
+				
+               
+	               for (Aeronave aer: GerenciadorAeronaves.listarTodas()) {
+	            	   for (String aer2: as) {
+	            		   if (aer2.equals(aer.getCodigo())) {
+	            			   ae.add(aer);
+	            		   }
+	            	   }
+	               }
+	             
+                Aeroporto a1 = new Aeroporto(from);
                 CiaAerea c = new CiaAerea(cod);
                 Aeroporto a2 = new Aeroporto(to);
-                Rota nova = new Rota(c,a1,a2,new Aeronave());
+                
+               
+                Rota nova = new Rota(c,a1,a2,ae);
                 adicionar(nova);
             }
         }

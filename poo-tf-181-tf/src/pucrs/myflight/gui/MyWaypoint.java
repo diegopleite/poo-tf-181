@@ -12,6 +12,11 @@ import org.jxmapviewer.viewer.GeoPosition;
  */
 public class MyWaypoint extends DefaultWaypoint
 {
+	@Override
+	public String toString() {
+		return "MyWaypoint [color=" + color + ", label=" + label + ", size=" + size + "]";
+	}
+
 	private final Color color;
 	private final String label;
 	private final double size;
