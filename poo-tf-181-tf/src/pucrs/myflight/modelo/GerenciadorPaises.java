@@ -7,17 +7,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class GerenciadorPaises {
-    private static HashMap<String,Pais> paises= new HashMap<>();
+    private static HashSet<Pais> paises= new HashSet<Pais>();
 
     public GerenciadorPaises(){
         //this.paises = new HashMap<>();
     }
-    public static HashMap<String,Pais> listarTodas(){
+    public static HashSet<Pais> listarTodas(){
         return paises;
     }
     public void carregaDados(String nomeArq) throws IOException {
@@ -36,13 +37,13 @@ public class GerenciadorPaises {
         }
     }
     public void adicionar(Pais pais) {
-        paises.put(pais.getCodigo(),
-                pais);
+        paises.add(pais);
     }
-    public Pais buscarCodigo(String cod) {
+ /*   public Pais buscarCodigo(String cod) {
         return paises.get(cod);
     }
     public Pais buscarNome(String nome) {
         return paises.get(nome);
     }
+    */
 }

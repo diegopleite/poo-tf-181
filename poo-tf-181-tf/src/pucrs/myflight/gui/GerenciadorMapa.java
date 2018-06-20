@@ -159,7 +159,7 @@ public class GerenciadorMapa {
 					g.setColor(Color.RED);
 
 					// Desenha label no primeiro trecho da rota
-					// Muito lento e polui demais a tela se houver muitas rotas
+				//	 Muito lento e polui demais a tela se houver muitas rotas
 					
 //					int dx = (int) (p0.getX() - p1.getX());
 //					int dy = (int) (p0.getY() - p1.getY());

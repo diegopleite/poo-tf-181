@@ -37,7 +37,7 @@ public class GerenciadorAeroportos {
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.forName("utf8")))) {
             sc.useDelimiter("[;\n]"); // separadores: ; e nova linha
             String header = sc.nextLine(); // pula cabeçalho
-            String cod, nome,lt,lg,pais;
+            String cod, nome,lt,lg,paiscode,paisnome = null;
             Double lat, lon;
 
 
@@ -46,11 +46,18 @@ public class GerenciadorAeroportos {
                 lt = sc.next();
                 lg = sc.next();
                 nome = sc.next();
-                pais = sc.next();
+                paiscode = sc.next();
                 lat = Double.parseDouble(lt);
                 lon = Double.parseDouble(lg);
+                for (Pais p: GerenciadorPaises.listarTodas()) {
+                if (p.getCodigo().equals(paiscode)) {
+                	paisnome=p.getNome();
+                }
+                }
+                	Pais pais = new Pais(paisnome, paiscode);
+                
 
-                Aeroporto novo = new Aeroporto(cod, nome,new Geo(lat,lon));
+                Aeroporto novo = new Aeroporto(cod, nome,new Geo(lat,lon),pais);
                 aeroportos.add(novo);
             }
         }
